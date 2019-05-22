@@ -1,13 +1,15 @@
 const mongoose = require('mongoose');
-const mongoDB = require('../server/database/index.js');
+const model = require('../server/database/model.js');
+const sampleData = require('../server/database/sampledata.js');
+const database = require('../server/database/index.js');
 
-const testSchema = mongoDB.bookSchema;
-const testModel = mongoose.model('Test', testSchema);
+
+/* const testModel = model;
 
 describe('seeding script', () => {
   beforeAll((done) => {
     mongoose.connect('mongodb://localhost/testDatabase', { useNewUrlParser: true });
-    mongoDB.seed(testModel, () => {
+    sampleData.seed(model, () => {
       done();
     });
   });
@@ -20,7 +22,7 @@ describe('seeding script', () => {
   });
 
   test('should seed the database with a correct model', (done) => {
-    testModel.findOne({ id: 6 }, (err, doc) => {
+    model.findOne({ id: 6 }, (err, doc) => {
       // eslint-disable-next-line no-underscore-dangle
       const actual = doc._doc;
 
@@ -47,9 +49,42 @@ describe('seeding script', () => {
   });
 
   afterAll((done) => {
-    testModel.deleteMany({}, () => {
+    model.deleteMany({}, () => {
       mongoose.disconnect();
       return done();
     });
   });
+}) */
+
+describe('CRUD script', () => {
+  test('should add the new book', (done) => {
+    const newBook = sampleData.getFakeBookData();
+    database.add(newBook, (err, addedBook) => {
+      expect(err).toBe(null);
+      expect(newBook.title).toBe(addedBook.title);
+      done();
+    });
+  });
+
+  test('should update the existing book', (done) => {
+    const newBook = {id:13, title:'test Jyoti'};
+    database.update(newBook, (err, result) => {
+      expect(err).toBe(null);
+      expect(newBook.title).toBe(result.title);
+      done();
+    });
+  });
+
+  /* test('should delete a book for id', (done) => {
+    database.findMaxId((id) => {
+      database.remove(id, (err, result) => {
+        // console.log("Delete result:", result);
+        expect(err).toBe(null);
+        const count = id === 0 ? 0 : 1;
+        expect(result.deletedCount).toBe(count);
+
+        done();
+      });
+    });
+  }); */
 });

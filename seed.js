@@ -1,6 +1,11 @@
-const mongo = require('./server/database/index.js');
+const mongoose = require('mongoose');
+const model = require('./server/database/model.js');
+const sampleData = require('./server/database/sampledata.js');
 
-mongo.seed(mongo.Book, () => {
-  console.log('complete')
-  process.exit(0);
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/books', { useNewUrlParser: true });
+sampleData.seed(model, () => {
+  console.log('complete');
+  mongoose.connection.close(() => {
+    process.exit(0);
+  });
 });

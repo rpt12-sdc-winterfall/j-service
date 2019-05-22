@@ -6,14 +6,20 @@
  */
 
 module.exports = {
-  extends: [
-    'airbnb',
-    "eslint:recommended",
-    "plugin:react/recommended"
-  ],
+  extends: "airbnb",
+  rules: {
+    "no-console": "off",
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "react/react-in-jsx-scope": "off"
+  },
   env: {
-    'commonjs': true,
+    'browser': true,
     'node': true,
-    'jest': true
-  }
+    'jest': true,
+  },
+  "globals": {
+    "React": "readonly",
+    "ReactDOM": "readonly",
+    "styled": "readonly",
+  },
 };
