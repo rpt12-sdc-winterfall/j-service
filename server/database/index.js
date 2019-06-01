@@ -2,9 +2,9 @@
 const mongoose = require('mongoose');
 const bookModel = require('./model.js');
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/books', { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/booksDB', { useNewUrlParser: true });
 const retrieve = (id, callback) => {
-  bookModel.findOne({ id }, (err, doc) => {
+  bookModel.findOne({ bookid: id }, (err, doc) => {
     // console.log('doc is', doc);
     callback(err, doc);
   });
@@ -12,7 +12,7 @@ const retrieve = (id, callback) => {
 
 const findMaxId = (callback) => {
   bookModel.findOne({})
-    .sort('-id')
+    .sort('-bookid')
     .exec((err, item) => {
       if (item) {
         callback(item.id);
@@ -25,7 +25,7 @@ const add = (newbookData, callback) => {
   console.log('New Book Data:', newbookData);
   findMaxId((id) => {
     // eslint-disable-next-line no-param-reassign
-    newbookData.id = id + 1;
+    newbookData.bookid = id + 1;
     const newbook = new bookModel(newbookData);
     newbook.save((err, result) => {
       console.log('Add result is', result);
@@ -36,7 +36,7 @@ const add = (newbookData, callback) => {
 
 
 const update = (bookData, callback) => {
-  bookModel.findOne({ id: bookData.id }, (err, book) => {
+  bookModel.findOne({ bookid: bookData.id }, (err, book) => {
     if (!err) {
       book.title = bookData.title;
       book.save((error, result) => {
@@ -51,7 +51,7 @@ const update = (bookData, callback) => {
 };
 
 const remove = (id, callback) => {
-  bookModel.deleteOne({ id }, (err, result) => {
+  bookModel.deleteOne({ bookid: id }, (err, result) => {
     console.log('Delete result:', result);
     callback(err, result);
   });
