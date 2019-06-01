@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/books', { useNewUrlParser: true });
 
 const bookSchema = mongoose.Schema({
-  id: {
+  bookid: {
     type: Number,
     index: true,
     unique: true,
