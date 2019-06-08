@@ -1,0 +1,13 @@
+LOAD DATA LOCAL INFILE '/Users/jkumra/hackreactor12/s16-sdc/j-service/server/database/MySQL/data6.csv'
+INTO TABLE books
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+LOAD DATA INFILE '/Users/jkumra/hackreactor12/s16-sdc/j-service/server/database/MySQL/data6.csv'
+INTO TABLE books
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+secure-file-priv = "/Users/jkumra/hackreactor12/s16-sdc/j-service/server/database/MySQL/"
