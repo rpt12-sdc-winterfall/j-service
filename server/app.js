@@ -1,11 +1,15 @@
+var nr = require('newrelic');
 const express = require('express');
+
+const cluster = require('cluster');
+const http = require('http');
+const numCPUs = require('os').cpus().length;
 // bundled with express by default
 // eslint-disable-next-line import/no-extraneous-dependencies
 const bodyParser = require('body-parser');
 const path = require('path');
 const books = require('./database/MySQL/crud/index.js');
-//const model = require('./database/model.js');
-//const data = require('./database/sampledata.js');
+
 
 
 const app = express();
@@ -26,7 +30,7 @@ app.get('/books/:id', (req, res) => {
   console.log('Got request for id:', req.params.id);
   books.retrieve(req.params.id, (err, doc) => {
     // add err handling
-    console.log('sending response :', doc, err);
+    //console.log('sending response :', doc, err);
     res.send(doc);
   });
 });
@@ -86,3 +90,36 @@ app.all('/books',
 app.all('*', errorHandler.httpError(404));
 
 module.exports = app;
+
+
+
+
+
+
+/* if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork workers.
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  //Check if work id is died
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`worker ${worker.process.pid} died`);
+  });
+
+} else {
+  // This is Workers can share any TCP connection
+  // It will be initialized using express
+  console.log(`Worker ${process.pid} started`);
+
+  app.get('/cluster', (req, res) => {
+    let worker = cluster.worker.id;
+    res.send(`Running on worker with id ==> ${worker}`);
+  });
+
+  app.listen(3000, function() {
+    console.log('Your node is running on port 3000');
+  });
+} */
