@@ -9,6 +9,9 @@ const mysql = require('mysql');
 connection.connect(); */
 const pool = mysql.createPool({
   connectionLimit: 100, // important
+  //host: 'ec2-3-88-104-244.compute-1.amazonaws.com:3306',
+  //user: 'sdc',
+
   host: 'localhost',
   user: 'root',
   password: 'password',
