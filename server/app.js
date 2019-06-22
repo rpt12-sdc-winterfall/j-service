@@ -14,7 +14,7 @@ const books = require('./database/MySQL/crud/index.js');
 
 const app = express();
 // eslint-disable-next-line import/order
-const errorHandler = require('express-error-handler');
+//const errorHandler = require('express-error-handler');
 
 app.use(express.static(path.join(__dirname, '/../client')));
 app.use('/:id', express.static(path.join(__dirname, '/../client')));
@@ -80,14 +80,14 @@ app.patch('/books', (req, res) => {
 });
 
 
-app.all('/books',
-  errorHandler.httpError(405));
+/* app.all('/books',
+  errorHand */ler.httpError(405));
 
 
 // Deliver 404 errors for any unhandled routes.
 // Express has a 404 handler built-in, but it
 // won't deliver errors consistent with your API.
-app.all('*', errorHandler.httpError(404));
+//app.all('*', errorHandler.httpError(404));
 
 module.exports = app;
 
