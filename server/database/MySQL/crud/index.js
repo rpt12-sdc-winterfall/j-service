@@ -2,7 +2,7 @@ const knex = require("knex")({
   client: "mysql",
   connection: {
     host: 'ec2-3-88-104-244.compute-1.amazonaws.com',
-  user: 'sdc',    
+    user: 'sdc',
     password: "password",
     database: "booksDB"
   },
@@ -21,10 +21,11 @@ const retrieve = (bookId, callback) => {
         let string=JSON.stringify(value);
         console.log('>> string: ', string );
         var json =  JSON.parse(string);
+        json.description = json.book_description;
         json.links =  {
           kindle: json.kindle,
           amazon: json.amazon,
-          worldcat: json.worldcat,
+          worldcat: "abcd",
           };
           json.links.stores = {
             audible: json.audible,
@@ -50,13 +51,13 @@ const retrieve = (bookId, callback) => {
             originalTitle: json.originalTitle,
             isbn: json.isbn,
             isbn13: json.isbn13,
-            asin: json.asin,
-            language: json.language,
+            asin: "some asin",
+            language: json.book_language,
 
           };
           json.metadata.series= {
-            name: json.name,
-            url: json.url,
+            name: json.series_name,
+            url: json.series_url,
           };
 
 
