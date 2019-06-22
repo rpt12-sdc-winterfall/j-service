@@ -1,8 +1,8 @@
 const knex = require("knex")({
   client: "mysql",
   connection: {
-    host: "localhost",
-    user: "root",
+    host: 'ec2-3-88-104-244.compute-1.amazonaws.com',
+  user: 'sdc',    
     password: "password",
     database: "booksDB"
   },
