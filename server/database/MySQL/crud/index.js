@@ -1,7 +1,7 @@
 const knex = require("knex")({
   client: "mysql",
   connection: {
-    host: "127.0.0.1",
+    host: "localhost",
     user: "root",
     password: "password",
     database: "booksDB"
@@ -11,14 +11,64 @@ const knex = require("knex")({
 
 const retrieve = (bookId, callback) => {
   var dataArr = [];
+  console.log("getting from database for id:", bookId);
   knex("books")
     .select("*")
     .where({ id: bookId })
     .then(function(result) {
+      //console.log("Got from database:", result);
       result.forEach(function(value) {
-        dataArr.push(value);
+        let string=JSON.stringify(value);
+        console.log('>> string: ', string );
+        var json =  JSON.parse(string);
+        json.links =  {
+          kindle: json.kindle,
+          amazon: json.amazon,
+          worldcat: json.worldcat,
+          };
+          json.links.stores = {
+            audible: json.audible,
+            barnesAndNoble: json.barnesAndNoble,
+            walmart: json.walmart,
+            apple: json.apple,
+            google: json.google,
+            abebooks: json.abebooks,
+            bookDesository: json.bookDesository,
+            indigo: json.indigo,
+            alibris: json.alibris,
+            betterWorldBooks: json.betterWorldBooks,
+            indieBound: json.indieBound,
+          };
+          json.ratings= {
+            five: json.rating_five ,
+            four: json.rating_four,
+            three: json.rating_three,
+            two: json.rating_two,
+            one: json.rating_one,
+          };
+          json.metadata= {
+            originalTitle: json.originalTitle,
+            isbn: json.isbn,
+            isbn13: json.isbn13,
+            asin: json.asin,
+            language: json.language,
+
+          };
+          json.metadata.series= {
+            name: json.name,
+            url: json.url,
+          };
+
+
+        dataArr.push(json);
       });
-      callback(null,dataArr);
+      if (dataArr.length > 0 ) {
+        callback(null,dataArr[0]);
+      } else {
+        callback(null,null);
+      }
+
+
     });
 };
 

@@ -1,4 +1,4 @@
-const { performance } = require("perf_hooks");
+const  performance = require("perf_hooks").performance;
 const sampledata = require("./sampleSqlData.js");
 const cluster = require("cluster");
 const os = require("os").cpus().length;

@@ -19,11 +19,12 @@ class App extends React.Component {
   componentDidMount() {
     const bookId = window.location.pathname.split('/')[1] || 0;
 
-    fetch(`http://bookdescriptionservice-env.gp7avcyjnp.us-east-2.elasticbeanstalk.com/books/${bookId}`)
+    fetch(`/books/${bookId}`)
       .then((response) => {
         return response.json();
       })
       .then((book) => {
+        console.log("Got book data as :", book);
         const date = new Date(book.publishDate);
         const month = date.toLocaleString('en-us', { month: 'long' });
         const day = date.toLocaleString('en-us', { day: 'numeric' });
