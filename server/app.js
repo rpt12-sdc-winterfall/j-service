@@ -30,7 +30,7 @@ app.get('/books/:id', (req, res) => {
   console.log('Got request for id:', req.params.id);
   books.retrieve(req.params.id, (err, doc) => {
     // add err handling
-    //console.log('sending response :', doc, err);
+    console.log("Got from DB retrieve:", err, doc);
     res.send(doc);
   });
 });
