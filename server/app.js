@@ -81,7 +81,7 @@ app.patch('/books', (req, res) => {
 
 
 /* app.all('/books',
-  errorHand */ler.httpError(405));
+  errorHand ler.httpError(405));*/
 
 
 // Deliver 404 errors for any unhandled routes.
